@@ -1,51 +1,50 @@
-<?php 
-	class proses{
-		function __construct(){
-			$server='localhost';
-			$user='root';
-			$psw='';
-			$dbname='db_penjualan';
-			$kon=$this->con=new PDO("mysql:host=$server;dbname=$dbname",$user,$psw);
-		}
+<?php
+
+class proses
+{
+    public $connection;
+    public function __construct()
+    {
+        $server = '127.0.0.1';
+        $username = 'root';
+        $password = '';
+        $dbname = 'sale';
+        $kon = $this->connection = new PDO("mysql:host=$server;dbname=$dbname", $username, $password);
+    }
+
+    public function get($field = null, $table = null, $property = null)
+    {
+
+        $qw = "SELECT $field FROM $table $property";
+        return $this->connection->query($qw);
+    }
+
+    public function ambil($field = null, $table = null)
+    {
+
+        $qw = "SELECT $field FROM $table";
+        return $this->connection->query($qw);
+    }
 
 
-
-		function get($cel=null,$table=null,$property=null){
-
-			$qw ="SELECT $cel FROM $table $property";
-			$ret=$this->con->query($qw);
-			return $ret;
-		}
-		function ambil($cel=null,$table=null){
-
-			$qw ="SELECT $cel FROM $table";
-			$ret=$this->con->query($qw);
-			return $ret;
-		}
+    public function insert($table = null, $value = null)
+    {
+        $qw = "INSERT INTO $table VALUES($value)";
+        return $this->connection->query($qw);
+    }
 
 
-		
-		function insert($table=null,$value=null){
-			$qw="INSERT INTO $table VALUES($value)";
-			$ret=$this->con->query($qw);
-			return $ret;
-		}
+    public function delete($table = null, $condition = null)
+    {
+        $qw = "DELETE FROM $table WHERE $condition";
+        return $this->connection->query($qw);
+    }
 
+    public function update($table = null, $value = null, $property = null)
+    {
+        $qw = "UPDATE $table SET $value WHERE $property";
+        return $this->connection->query($qw);
+    }
+}
 
-		function delete($table=null,$condition=null){
-			$qw="DELETE FROM $table WHERE $condition";
-			$ret=$this->con->query($qw);
-			return $ret;
-		}
-
-		function update($table=null,$value=null,$property=null){
-			$qw="UPDATE $table SET $value WHERE $property";
-			$ret=$this->con->query($qw);
-			return $ret;
-		}
-
-
-
-	}
-	$db=new proses;
- ?>
+$db = new proses;
